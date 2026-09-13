@@ -1,0 +1,564 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Design review</title>
+  <style>
+    :root {
+      color-scheme: light dark;
+      --bg: #f6f7f9;
+      --panel: #ffffff;
+      --text: #15171a;
+      --muted: #666d78;
+      --line: #dfe3e8;
+      --accent: #2563eb;
+      --accent-soft: #eaf1ff;
+      --good: #19733c;
+      --good-soft: #e9f7ef;
+      --shadow: 0 8px 28px rgba(15, 23, 42, 0.08);
+      --radius: 16px;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #111317;
+        --panel: #191c22;
+        --text: #f4f6f8;
+        --muted: #a9b0bb;
+        --line: #303640;
+        --accent: #7aa2ff;
+        --accent-soft: #1e2b49;
+        --good: #80d6a3;
+        --good-soft: #193627;
+        --shadow: none;
+      }
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.5;
+    }
+
+    button, input, textarea { font: inherit; }
+    button { cursor: pointer; }
+
+    .wrap {
+      width: min(980px, calc(100% - 28px));
+      margin: 0 auto;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      border-bottom: 1px solid var(--line);
+      background: color-mix(in srgb, var(--bg) 88%, transparent);
+      backdrop-filter: blur(14px);
+    }
+
+    .bar {
+      min-height: 66px;
+      display: flex;
+      gap: 14px;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .bar-title {
+      min-width: 0;
+    }
+
+    .bar-title strong {
+      display: block;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .small { color: var(--muted); font-size: 13px; }
+
+    main { padding: 28px 0 70px; }
+
+    .hero, .settled, .card, .feedback {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    .hero { padding: 24px; margin-bottom: 18px; }
+    .hero h1 { margin: 0 0 8px; font-size: clamp(26px, 4vw, 38px); line-height: 1.15; }
+    .hero p { margin: 8px 0 0; color: var(--muted); }
+
+    .guide {
+      margin-top: 18px;
+      padding: 13px 14px;
+      border-radius: 12px;
+      background: var(--accent-soft);
+      color: var(--text);
+    }
+
+    .settled { padding: 18px 20px; margin-bottom: 18px; }
+    .settled h2 { margin: 0 0 10px; font-size: 17px; }
+    .settled ul { margin: 0; padding-left: 22px; }
+
+    .questions { display: grid; gap: 16px; }
+
+    .card { padding: 20px; }
+    .card-head { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; margin-bottom: 8px; }
+    .badge {
+      padding: 3px 9px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 650;
+    }
+    .qid { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
+
+    .card h2 { margin: 0 0 6px; font-size: 20px; line-height: 1.35; }
+    .context { margin: 0 0 16px; color: var(--muted); }
+
+    .options { display: grid; gap: 10px; }
+    .option {
+      display: grid;
+      grid-template-columns: 24px 1fr;
+      gap: 10px;
+      padding: 13px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      transition: border-color .15s ease, background .15s ease;
+    }
+    .option:hover { border-color: var(--accent); }
+    .option:has(input:checked) { border-color: var(--accent); background: var(--accent-soft); }
+    .option input { margin: 4px 0 0; }
+    .option-title { font-weight: 700; }
+    .option-detail { margin-top: 2px; color: var(--muted); font-size: 14px; }
+    .recommended {
+      display: inline-block;
+      margin-left: 8px;
+      padding: 2px 7px;
+      border-radius: 999px;
+      background: var(--good-soft);
+      color: var(--good);
+      font-size: 11px;
+      font-weight: 750;
+      vertical-align: 1px;
+    }
+
+    .other-input, textarea {
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: transparent;
+      color: var(--text);
+      padding: 10px 12px;
+      outline: none;
+    }
+    .other-input:focus, textarea:focus { border-color: var(--accent); }
+    textarea { min-height: 86px; resize: vertical; }
+
+    .comment { margin-top: 14px; }
+    .comment label { display: block; margin-bottom: 6px; color: var(--muted); font-size: 13px; }
+
+    .feedback { margin-top: 22px; padding: 20px; }
+    .feedback h2 { margin: 0 0 6px; }
+    .feedback .actions { display: flex; gap: 10px; flex-wrap: wrap; margin: 14px 0; }
+    .feedback textarea { min-height: 240px; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 12px; }
+
+    .btn {
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 9px 13px;
+      background: var(--panel);
+      color: var(--text);
+      font-weight: 700;
+    }
+    .btn.primary { border-color: var(--accent); background: var(--accent); color: white; }
+    .btn:active { transform: translateY(1px); }
+
+    .status { min-height: 20px; color: var(--good); font-size: 13px; }
+
+    @media (max-width: 620px) {
+      .wrap { width: min(100% - 18px, 980px); }
+      .bar { min-height: 58px; }
+      .bar .small { display: none; }
+      .hero, .card, .feedback, .settled { border-radius: 13px; }
+      .hero { padding: 20px 17px; }
+      .card, .feedback { padding: 17px; }
+      .option { padding: 12px 10px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap bar">
+      <div class="bar-title">
+        <strong id="stickyTitle">Design review</strong>
+        <span class="small" id="stickyMeta"></span>
+      </div>
+      <button class="btn primary" id="topCopy" type="button">Copy feedback</button>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="hero">
+      <h1 id="title"></h1>
+      <p id="topic"></p>
+      <div class="guide" id="guide"></div>
+    </section>
+
+    <section class="settled" id="settledBox" hidden>
+      <h2 id="settledTitle">Already settled</h2>
+      <ul id="settledList"></ul>
+    </section>
+
+    <section class="questions" id="questions"></section>
+
+    <section class="feedback">
+      <h2 id="feedbackTitle">Feedback to send back</h2>
+      <p class="small" id="feedbackHelp"></p>
+      <div class="comment">
+        <label for="globalNotes" id="globalNotesLabel">Global notes (optional)</label>
+        <textarea id="globalNotes"></textarea>
+      </div>
+      <div class="actions">
+        <button class="btn primary" id="copyBtn" type="button">Copy feedback</button>
+        <button class="btn" id="resetBtn" type="button">Reset to recommendations</button>
+      </div>
+      <div class="status" id="status" aria-live="polite"></div>
+      <textarea id="preview" readonly></textarea>
+    </section>
+  </main>
+
+  <script>
+    const MODEL = __MODEL_JSON__;
+
+    const TEXT = {
+      en: {
+        round: 'Round',
+        guide: 'Recommended answers are pre-selected. Review them, change anything you disagree with, add comments where useful, then click “Copy feedback” and paste the result back into the chat.',
+        settled: 'Already settled',
+        recommended: 'Recommended',
+        other: 'Other',
+        otherPlaceholder: 'Enter your own answer',
+        comments: 'Additional comments (optional)',
+        commentsPlaceholder: 'Add nuance, constraints, or corrections. Comments override the selected option if they conflict.',
+        feedbackTitle: 'Feedback to send back',
+        feedbackHelp: 'This preview updates automatically. The copied text tells the agent to continue design only; implementation still requires explicit approval later.',
+        globalNotes: 'Global notes (optional)',
+        copy: 'Copy feedback',
+        reset: 'Reset to recommendations',
+        copied: 'Copied. Paste it back into the chat.',
+        copyFailed: 'Automatic copy was unavailable. The feedback text is selected below; copy it manually.',
+        confirmReset: 'Reset every answer and note to the recommended defaults?',
+        noAnswer: '(no answer)',
+        instruction: 'Use these answers to update the design. Do not implement project code yet. If material decisions remain, generate the next HTML review round. Otherwise present the final design/implementation plan and wait for a fresh explicit approval before implementation.'
+      },
+      'zh-CN': {
+        round: '第',
+        guide: '推荐答案已经预选。请快速审阅，修改任何你不同意的选项，并按需补充说明；完成后点击“复制反馈”，把结果粘贴回聊天。',
+        settled: '已经确定',
+        recommended: '推荐',
+        other: '其他',
+        otherPlaceholder: '填写你的答案',
+        comments: '补充说明（可选）',
+        commentsPlaceholder: '补充限制、细节或修正。如果与已选选项冲突，以这里的说明为准。',
+        feedbackTitle: '粘贴回聊天的反馈',
+        feedbackHelp: '下方内容会自动更新。复制内容会明确要求 Agent 继续设计而不是直接实现；真正写代码仍需要你之后明确批准。',
+        globalNotes: '整体补充说明（可选）',
+        copy: '复制反馈',
+        reset: '恢复推荐选项',
+        copied: '已复制。请把它粘贴回聊天。',
+        copyFailed: '浏览器无法自动复制，下面的反馈文本已被选中，请手动复制。',
+        confirmReset: '要把所有答案和备注恢复为推荐默认值吗？',
+        noAnswer: '（未回答）',
+        instruction: '请根据这些答案更新设计，不要开始修改项目代码。如果仍有重要决策未解决，请生成下一轮 HTML 审阅；如果设计已经完整，请先给出最终设计/实施计划，并等待我再次明确批准后再开始实现。'
+      }
+    };
+
+    const lang = TEXT[MODEL.lang] ? MODEL.lang : 'en';
+    const t = TEXT[lang];
+    document.documentElement.lang = lang;
+
+    const $ = (id) => document.getElementById(id);
+    const storageKey = `grill-me-batch:${MODEL.id}`;
+
+    function safeArray(value) { return Array.isArray(value) ? value : []; }
+    function questionName(id) { return `q-${id}`; }
+
+    function defaultState() {
+      const answers = {};
+      for (const q of safeArray(MODEL.questions)) {
+        const rec = safeArray(q.options).filter(o => o.recommended).map(o => o.label);
+        answers[q.id] = {
+          selected: q.type === 'multi' ? rec : (rec[0] ? [rec[0]] : []),
+          other: '',
+          comment: ''
+        };
+      }
+      return { answers, globalNotes: '' };
+    }
+
+    function loadState() {
+      try {
+        const parsed = JSON.parse(localStorage.getItem(storageKey));
+        if (parsed && parsed.answers) return parsed;
+      } catch (_) {}
+      return defaultState();
+    }
+
+    let state = loadState();
+
+    function saveState() {
+      localStorage.setItem(storageKey, JSON.stringify(state));
+      updatePreview();
+    }
+
+    function makeOption(q, option, index) {
+      const label = document.createElement('label');
+      label.className = 'option';
+
+      const input = document.createElement('input');
+      input.type = q.type === 'multi' ? 'checkbox' : 'radio';
+      input.name = questionName(q.id);
+      input.value = option.label;
+      input.checked = safeArray(state.answers[q.id]?.selected).includes(option.label);
+      input.addEventListener('change', () => {
+        const current = state.answers[q.id] || (state.answers[q.id] = {selected: [], other: '', comment: ''});
+        if (q.type === 'multi') {
+          const set = new Set(current.selected || []);
+          input.checked ? set.add(option.label) : set.delete(option.label);
+          current.selected = [...set];
+        } else {
+          current.selected = [option.label];
+          const otherRadio = document.querySelector(`input[name="${CSS.escape(questionName(q.id))}"][value="__other__"]`);
+          if (otherRadio) otherRadio.checked = false;
+        }
+        saveState();
+      });
+
+      const body = document.createElement('div');
+      const title = document.createElement('div');
+      title.className = 'option-title';
+      title.append(document.createTextNode(option.label));
+      if (option.recommended) {
+        const rec = document.createElement('span');
+        rec.className = 'recommended';
+        rec.textContent = t.recommended;
+        title.append(rec);
+      }
+      const detail = document.createElement('div');
+      detail.className = 'option-detail';
+      detail.textContent = option.detail || '';
+      body.append(title, detail);
+      label.append(input, body);
+      return label;
+    }
+
+    function makeOther(q) {
+      const wrap = document.createElement('label');
+      wrap.className = 'option';
+
+      const input = document.createElement('input');
+      input.type = q.type === 'multi' ? 'checkbox' : 'radio';
+      input.name = questionName(q.id);
+      input.value = '__other__';
+      input.checked = Boolean(state.answers[q.id]?.other);
+
+      const body = document.createElement('div');
+      const title = document.createElement('div');
+      title.className = 'option-title';
+      title.textContent = t.other;
+      const other = document.createElement('input');
+      other.className = 'other-input';
+      other.type = 'text';
+      other.placeholder = t.otherPlaceholder;
+      other.value = state.answers[q.id]?.other || '';
+
+      const syncOther = () => {
+        const current = state.answers[q.id] || (state.answers[q.id] = {selected: [], other: '', comment: ''});
+        current.other = other.value.trim();
+        input.checked = Boolean(current.other);
+        if (q.type === 'single' && current.other) {
+          current.selected = [];
+          document.querySelectorAll(`input[name="${CSS.escape(questionName(q.id))}"]`).forEach(el => {
+            if (el !== input) el.checked = false;
+          });
+        }
+        saveState();
+      };
+
+      other.addEventListener('input', syncOther);
+      other.addEventListener('focus', () => {
+        input.checked = true;
+        if (q.type === 'single') {
+          const current = state.answers[q.id] || (state.answers[q.id] = {selected: [], other: '', comment: ''});
+          current.selected = [];
+        }
+      });
+      input.addEventListener('change', () => {
+        if (input.checked) other.focus();
+        if (!input.checked) {
+          const current = state.answers[q.id];
+          if (current) current.other = '';
+          other.value = '';
+          saveState();
+        }
+      });
+
+      body.append(title, other);
+      wrap.append(input, body);
+      return wrap;
+    }
+
+    function renderQuestion(q) {
+      if (!state.answers[q.id]) state.answers[q.id] = {selected: [], other: '', comment: ''};
+
+      const card = document.createElement('article');
+      card.className = 'card';
+      card.dataset.questionId = q.id;
+
+      const head = document.createElement('div');
+      head.className = 'card-head';
+      const category = document.createElement('span');
+      category.className = 'badge';
+      category.textContent = q.category || 'Decision';
+      const id = document.createElement('span');
+      id.className = 'badge qid';
+      id.textContent = q.id;
+      head.append(category, id);
+
+      const h2 = document.createElement('h2');
+      h2.textContent = q.question;
+      const context = document.createElement('p');
+      context.className = 'context';
+      context.textContent = q.context || '';
+
+      const options = document.createElement('div');
+      options.className = 'options';
+      safeArray(q.options).forEach((o, i) => options.appendChild(makeOption(q, o, i)));
+      options.appendChild(makeOther(q));
+
+      const comment = document.createElement('div');
+      comment.className = 'comment';
+      const commentLabel = document.createElement('label');
+      commentLabel.textContent = t.comments;
+      const textarea = document.createElement('textarea');
+      textarea.placeholder = t.commentsPlaceholder;
+      textarea.value = state.answers[q.id]?.comment || '';
+      textarea.addEventListener('input', () => {
+        state.answers[q.id].comment = textarea.value;
+        saveState();
+      });
+      comment.append(commentLabel, textarea);
+
+      card.append(head, h2, context, options, comment);
+      return card;
+    }
+
+    function answerLines(q) {
+      const a = state.answers[q.id] || {selected: [], other: '', comment: ''};
+      const chosen = [...safeArray(a.selected)];
+      if (a.other) chosen.push(`Other: ${a.other}`);
+      const answer = chosen.length ? chosen.join(' + ') : t.noAnswer;
+      const lines = [`[${q.id}] ${q.question}`, `Answer: ${answer}`];
+      if ((a.comment || '').trim()) lines.push(`Comment: ${a.comment.trim()}`);
+      return lines;
+    }
+
+    function buildFeedback() {
+      const lines = [
+        'GRILL_ME_BATCH_FEEDBACK',
+        `Topic: ${MODEL.title}`,
+        `Round: ${MODEL.round || 1}`,
+        '',
+        `Instruction: ${t.instruction}`,
+        ''
+      ];
+      for (const q of safeArray(MODEL.questions)) {
+        lines.push(...answerLines(q), '');
+      }
+      if ((state.globalNotes || '').trim()) {
+        lines.push(`Global notes: ${state.globalNotes.trim()}`, '');
+      }
+      lines.push('END_GRILL_ME_BATCH_FEEDBACK');
+      return lines.join('\n');
+    }
+
+    function updatePreview() {
+      $('preview').value = buildFeedback();
+    }
+
+    async function copyFeedback() {
+      const text = buildFeedback();
+      const preview = $('preview');
+      preview.value = text;
+      try {
+        if (!navigator.clipboard || !window.isSecureContext) throw new Error('clipboard unavailable');
+        await navigator.clipboard.writeText(text);
+        $('status').textContent = t.copied;
+      } catch (_) {
+        preview.focus();
+        preview.select();
+        let ok = false;
+        try { ok = document.execCommand('copy'); } catch (_) {}
+        $('status').textContent = ok ? t.copied : t.copyFailed;
+      }
+    }
+
+    function resetState() {
+      if (!window.confirm(t.confirmReset)) return;
+      state = defaultState();
+      localStorage.removeItem(storageKey);
+      render();
+    }
+
+    function render() {
+      document.title = MODEL.title || 'Design review';
+      $('title').textContent = MODEL.title || 'Design review';
+      $('topic').textContent = MODEL.topic || '';
+      $('guide').textContent = t.guide;
+      $('stickyTitle').textContent = MODEL.title || 'Design review';
+      $('stickyMeta').textContent = lang === 'zh-CN' ? `${t.round} ${MODEL.round || 1} 轮` : `${t.round} ${MODEL.round || 1}`;
+      $('settledTitle').textContent = t.settled;
+      $('feedbackTitle').textContent = t.feedbackTitle;
+      $('feedbackHelp').textContent = t.feedbackHelp;
+      $('globalNotesLabel').textContent = t.globalNotes;
+      $('topCopy').textContent = t.copy;
+      $('copyBtn').textContent = t.copy;
+      $('resetBtn').textContent = t.reset;
+      $('globalNotes').value = state.globalNotes || '';
+      $('status').textContent = '';
+
+      const settled = safeArray(MODEL.settled);
+      $('settledBox').hidden = settled.length === 0;
+      $('settledList').replaceChildren(...settled.map(item => {
+        const li = document.createElement('li');
+        li.textContent = item;
+        return li;
+      }));
+
+      const qRoot = $('questions');
+      qRoot.replaceChildren(...safeArray(MODEL.questions).map(renderQuestion));
+      updatePreview();
+    }
+
+    $('globalNotes').addEventListener('input', (e) => {
+      state.globalNotes = e.target.value;
+      saveState();
+    });
+    $('topCopy').addEventListener('click', copyFeedback);
+    $('copyBtn').addEventListener('click', copyFeedback);
+    $('resetBtn').addEventListener('click', resetState);
+
+    render();
+  </script>
+</body>
+</html>

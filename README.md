@@ -23,8 +23,12 @@ templates/
 └── skill-template/
     └── SKILL.md
 skills/
-└── explore-exploit/
-    └── SKILL.md
+├── explore-exploit/
+│   └── SKILL.md
+└── grill-me-batch/
+    ├── SKILL.md
+    └── assets/
+        └── review.html
 ```
 
 Each skill lives in its own directory and should contain a `SKILL.md`.
@@ -68,6 +72,7 @@ Keep the `name` short and stable. Make the `description` explain when the skill 
 ## Available Skills
 
 - [explore-exploit](skills/explore-exploit/SKILL.md): Balance exploitation and exploration when proposing design alternatives, combining evidence-backed approaches with informative experiments and bold creative directions.
+- [grill-me-batch](skills/grill-me-batch/SKILL.md): Batch high-leverage design decisions into a self-contained local HTML review form, collect one copyable feedback payload, iterate only on unresolved dependencies, and require explicit approval before implementation.
 
 ## Example
 
