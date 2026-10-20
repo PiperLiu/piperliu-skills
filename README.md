@@ -23,6 +23,8 @@ templates/
 └── skill-template/
     └── SKILL.md
 skills/
+├── be-zym/
+│   └── SKILL.md
 ├── delta-transfer/
 │   ├── SKILL.md
 │   └── references/
@@ -76,6 +78,7 @@ Keep the `name` short and stable. Make the `description` explain when the skill 
 
 ## Available Skills
 
+- [be-zym](skills/be-zym/SKILL.md): Apply Zhang Yiming-inspired habits of low ego, independent judgment, empathy, imagination, practical execution, and patient iteration when requested.
 - [delta-transfer](skills/delta-transfer/SKILL.md): Infer the transferable improvement delta from a baseline A to a preferred counterpart B, then apply that direction to a new target C without copying B or erasing C's identity.
 - [explore-exploit](skills/explore-exploit/SKILL.md): Balance exploitation and exploration when proposing design alternatives, combining evidence-backed approaches with informative experiments and bold creative directions.
 - [grill-me-batch](skills/grill-me-batch/SKILL.md): Batch high-leverage design decisions into a self-contained local HTML review form, collect one copyable feedback payload, iterate only on unresolved dependencies, and require explicit approval before implementation.
