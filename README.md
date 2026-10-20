@@ -23,6 +23,8 @@ templates/
 └── skill-template/
     └── SKILL.md
 skills/
+├── ask-deeper/
+│   └── SKILL.md
 ├── be-zym/
 │   └── SKILL.md
 ├── delta-transfer/
@@ -78,6 +80,7 @@ Keep the `name` short and stable. Make the `description` explain when the skill 
 
 ## Available Skills
 
+- [ask-deeper](skills/ask-deeper/SKILL.md): Uncover the deeper question behind a recurring discussion and suggest a small, concrete way to investigate it.
 - [be-zym](skills/be-zym/SKILL.md): Apply Zhang Yiming-inspired habits of low ego, independent judgment, empathy, imagination, practical execution, and patient iteration when requested.
 - [delta-transfer](skills/delta-transfer/SKILL.md): Infer the transferable improvement delta from a baseline A to a preferred counterpart B, then apply that direction to a new target C without copying B or erasing C's identity.
 - [explore-exploit](skills/explore-exploit/SKILL.md): Balance exploitation and exploration when proposing design alternatives, combining evidence-backed approaches with informative experiments and bold creative directions.
