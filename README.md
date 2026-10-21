@@ -34,10 +34,12 @@ skills/
 │       └── method.md
 ├── explore-exploit/
 │   └── SKILL.md
-└── grill-me-batch/
-    ├── SKILL.md
-    └── assets/
-        └── review.html
+├── grill-me-batch/
+│   ├── SKILL.md
+│   └── assets/
+│       └── review.html
+└── keep-going/
+    └── SKILL.md
 ```
 
 Each skill lives in its own directory and should contain a `SKILL.md`.
@@ -85,6 +87,7 @@ Keep the `name` short and stable. Make the `description` explain when the skill 
 - [delta-transfer](skills/delta-transfer/SKILL.md): Infer the transferable improvement delta from a baseline A to a preferred counterpart B, then apply that direction to a new target C without copying B or erasing C's identity.
 - [explore-exploit](skills/explore-exploit/SKILL.md): Balance exploitation and exploration when proposing design alternatives, combining evidence-backed approaches with informative experiments and bold creative directions.
 - [grill-me-batch](skills/grill-me-batch/SKILL.md): Batch high-leverage design decisions into a self-contained local HTML review form, collect one copyable feedback payload, iterate only on unresolved dependencies, and require explicit approval before implementation.
+- [keep-going](skills/keep-going/SKILL.md): Resume a difficult or stalled task with fresh evidence and purposeful action, preserving the original goal and checking results before declaring completion.
 
 ## Example
 
