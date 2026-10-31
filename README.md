@@ -38,8 +38,11 @@ skills/
 │   ├── SKILL.md
 │   └── assets/
 │       └── review.html
-└── keep-going/
-    └── SKILL.md
+├── keep-going/
+│   └── SKILL.md
+└── ui-design-better/
+    ├── SKILL.md
+    └── references/
 ```
 
 Each skill lives in its own directory and should contain a `SKILL.md`.
@@ -88,6 +91,7 @@ Keep the `name` short and stable. Make the `description` explain when the skill 
 - [explore-exploit](skills/explore-exploit/SKILL.md): Balance exploitation and exploration when proposing design alternatives, combining evidence-backed approaches with informative experiments and bold creative directions.
 - [grill-me-batch](skills/grill-me-batch/SKILL.md): Batch high-leverage design decisions into a self-contained local HTML review form, collect one copyable feedback payload, iterate only on unresolved dependencies, and require explicit approval before implementation.
 - [keep-going](skills/keep-going/SKILL.md): Resume a difficult or stalled task with fresh evidence and purposeful action, preserving the original goal and checking results before declaring completion.
+- [ui-design-better](skills/ui-design-better/SKILL.md): Design and refine interfaces through product-specific composition, coherent visual language, purposeful motion, clear copy, and evidence-based review, with adjustable defaults that preserve creative freedom.
 
 ## Example
 
