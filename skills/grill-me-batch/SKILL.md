@@ -123,6 +123,7 @@ Replace the single placeholder `__MODEL_JSON__` with JSON shaped like:
   "title": "Short design review title",
   "topic": "One sentence describing what this round settles.",
   "round": 1,
+  "lang": "en",
   "settled": ["Concise decision already settled"],
   "questions": [
     {
@@ -148,7 +149,7 @@ Replace the single placeholder `__MODEL_JSON__` with JSON shaped like:
 }
 ```
 
-The bundled template uses English interface text. If the user requests a localized review, translate the interface text in the generated copy and update its HTML `lang` attribute.
+Set `lang` to `zh-CN` for a Chinese conversation; otherwise use `en` unless another language is clearly appropriate.
 
 ### Artifact rules
 

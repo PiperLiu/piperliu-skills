@@ -26,7 +26,7 @@ Explain the main point without making readers open a link. Place a useful source
 
 Use everyday verbs when accurate, with a concrete object: what is checked, changed, saved, or sent? Replace vague actions such as “get it sorted” with the actual operation when the reader otherwise has to guess. A clear subject can be omitted in context; restore it when the reader must reread to identify the actor.
 
-In Chinese, preserve grammatical markers and particles when they express relationships, aspect, emphasis, or natural cadence. Read the original and revised wording in context before deciding whether to change them. Use natural Chinese punctuation and readable spacing between Chinese text, Latin text, and numbers where appropriate. Preserve code, exact names, URLs, and quotations.
+In Chinese, preserve grammatical markers and particles such as “的”, “了”, “在”, and “就” when they convey meaning or shape the cadence. Read the original and revised wording in context before deciding whether to change them. Use natural Chinese punctuation and readable spacing between Chinese text, Latin text, and numbers where appropriate. Preserve code, exact names, URLs, and quotations.
 
 In English, prefer ordinary direct wording and complete relationships. Formal writing can remain natural; conversational writing need not be careless. Oral and social content may use a looser cadence. Remove repeated starts and empty verbal tics when they add no meaning.
 
