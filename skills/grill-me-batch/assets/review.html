@@ -240,52 +240,26 @@
   <script>
     const MODEL = __MODEL_JSON__;
 
-    const TEXT = {
-      en: {
-        round: 'Round',
-        guide: 'Recommended answers are pre-selected. Review them, change anything you disagree with, add comments where useful, then click “Copy feedback” and paste the result back into the chat.',
-        settled: 'Already settled',
-        recommended: 'Recommended',
-        other: 'Other',
-        otherPlaceholder: 'Enter your own answer',
-        comments: 'Additional comments (optional)',
-        commentsPlaceholder: 'Add nuance, constraints, or corrections. Comments override the selected option if they conflict.',
-        feedbackTitle: 'Feedback to send back',
-        feedbackHelp: 'This preview updates automatically. The copied text tells the agent to continue design only; implementation still requires explicit approval later.',
-        globalNotes: 'Global notes (optional)',
-        copy: 'Copy feedback',
-        reset: 'Reset to recommendations',
-        copied: 'Copied. Paste it back into the chat.',
-        copyFailed: 'Automatic copy was unavailable. The feedback text is selected below; copy it manually.',
-        confirmReset: 'Reset every answer and note to the recommended defaults?',
-        noAnswer: '(no answer)',
-        instruction: 'Use these answers to update the design. Do not implement project code yet. If material decisions remain, generate the next HTML review round. Otherwise present the final design/implementation plan and wait for a fresh explicit approval before implementation.'
-      },
-      'zh-CN': {
-        round: '第',
-        guide: '推荐答案已经预选。请快速审阅，修改任何你不同意的选项，并按需补充说明；完成后点击“复制反馈”，把结果粘贴回聊天。',
-        settled: '已经确定',
-        recommended: '推荐',
-        other: '其他',
-        otherPlaceholder: '填写你的答案',
-        comments: '补充说明（可选）',
-        commentsPlaceholder: '补充限制、细节或修正。如果与已选选项冲突，以这里的说明为准。',
-        feedbackTitle: '粘贴回聊天的反馈',
-        feedbackHelp: '下方内容会自动更新。复制内容会明确要求 Agent 继续设计而不是直接实现；真正写代码仍需要你之后明确批准。',
-        globalNotes: '整体补充说明（可选）',
-        copy: '复制反馈',
-        reset: '恢复推荐选项',
-        copied: '已复制。请把它粘贴回聊天。',
-        copyFailed: '浏览器无法自动复制，下面的反馈文本已被选中，请手动复制。',
-        confirmReset: '要把所有答案和备注恢复为推荐默认值吗？',
-        noAnswer: '（未回答）',
-        instruction: '请根据这些答案更新设计，不要开始修改项目代码。如果仍有重要决策未解决，请生成下一轮 HTML 审阅；如果设计已经完整，请先给出最终设计/实施计划，并等待我再次明确批准后再开始实现。'
-      }
+    const t = {
+      round: 'Round',
+      guide: 'Recommended answers are pre-selected. Review them, change anything you disagree with, add comments where useful, then click “Copy feedback” and paste the result back into the chat.',
+      settled: 'Already settled',
+      recommended: 'Recommended',
+      other: 'Other',
+      otherPlaceholder: 'Enter your own answer',
+      comments: 'Additional comments (optional)',
+      commentsPlaceholder: 'Add nuance, constraints, or corrections. Comments override the selected option if they conflict.',
+      feedbackTitle: 'Feedback to send back',
+      feedbackHelp: 'This preview updates automatically. The copied text tells the agent to continue design only; implementation still requires explicit approval later.',
+      globalNotes: 'Global notes (optional)',
+      copy: 'Copy feedback',
+      reset: 'Reset to recommendations',
+      copied: 'Copied. Paste it back into the chat.',
+      copyFailed: 'Automatic copy was unavailable. The feedback text is selected below; copy it manually.',
+      confirmReset: 'Reset every answer and note to the recommended defaults?',
+      noAnswer: '(no answer)',
+      instruction: 'Use these answers to update the design. Do not implement project code yet. If material decisions remain, generate the next HTML review round. Otherwise present the final design/implementation plan and wait for a fresh explicit approval before implementation.'
     };
-
-    const lang = TEXT[MODEL.lang] ? MODEL.lang : 'en';
-    const t = TEXT[lang];
-    document.documentElement.lang = lang;
 
     const $ = (id) => document.getElementById(id);
     const storageKey = `grill-me-batch:${MODEL.id}`;
@@ -526,7 +500,7 @@
       $('topic').textContent = MODEL.topic || '';
       $('guide').textContent = t.guide;
       $('stickyTitle').textContent = MODEL.title || 'Design review';
-      $('stickyMeta').textContent = lang === 'zh-CN' ? `${t.round} ${MODEL.round || 1} 轮` : `${t.round} ${MODEL.round || 1}`;
+      $('stickyMeta').textContent = `${t.round} ${MODEL.round || 1}`;
       $('settledTitle').textContent = t.settled;
       $('feedbackTitle').textContent = t.feedbackTitle;
       $('feedbackHelp').textContent = t.feedbackHelp;

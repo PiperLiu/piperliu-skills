@@ -10,6 +10,7 @@ This repository contains reusable Agent Skills.
 - Avoid project-specific secrets, credentials, hostnames, account IDs, private URLs, or personal data.
 - Prefer portable instructions over agent-specific syntax.
 - Keep examples generic unless the example itself is the subject of the skill.
+- Use precise English for repository prose, examples, code comments, and bundled interface copy.
 
 ## Editing Skills
 
